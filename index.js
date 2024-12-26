@@ -78,7 +78,7 @@ app.post("/signup", async (req, res) => {
 // sign in endpoint
 app.post("/signin", async (req, res) => {
   const client = await pool.connect();
-  const { username, email } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     // 1. check username & email
@@ -95,7 +95,8 @@ app.post("/signin", async (req, res) => {
 
     // 3. verify password by comparing between pwd in request body & pwd exist in DB
     const passwordIsValid = await bcrypt.compare(
-      req.body.password,
+      // req.body.password,
+      password,
       user.password, // hashed pwd
     );
     // if invalid password, return error to client & set token to null
